@@ -45,7 +45,7 @@ for i = 7:8
         on = on(indi);
         [r(cycle),p(cycle)] = corr(off,on,'type','Pearson','rows','all');
         
-        tpoints{cycle} = strcat(num2str(tim(i)),num2str(tim(j)),'-','r=',num2str(round(r(cycle),2,'significant')),'N=',num2str(sum(indi)));
+        tpoints{cycle} = strcat(num2str(tim(i)),'x',num2str(tim(j)),'-','r=',num2str(round(r(cycle),2,'significant')),'N=',num2str(sum(indi)));
         mdl = fitlm(off,on);
         subplot(4,4,cycle);plot(mdl);title(tpoints{cycle})
         
@@ -57,12 +57,27 @@ end
 figure(2)
 plot(timeadj,abscellies)
 
+figure(3)
 %time = [-4,32]
         off = abscellies(:,7);
         on = abscellies(:,16);
+        
 mdl = fitlm(off,on);
 mdl
+subplot(2,2,1);plot(mdl); title('lin vs lin')
+
 mdl = fitlm(log(off),log(on));
 mdl
+subplot(2,2,2);plot(mdl);title('log vs log')
+
+
+mdl = fitlm(log(off),on);
+mdl
+subplot(2,2,3);plot(mdl);title('log vs lin')
+
+mdl = fitlm(off,log(on));
+mdl
+subplot(2,2,4);plot(mdl);title('lin vs log')
+
         
 
